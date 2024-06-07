@@ -8,7 +8,7 @@ class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomeAppBar(
       {super.key,
       this.title,
-      this.showBackArrow = true,
+      this.showBackArrow = false,
       this.leadingIcon,
       this.actions,
       this.leadingOnPressed});
@@ -26,12 +26,17 @@ class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         horizontal: TSizes.md,
       ),
       child: AppBar(
-          automaticallyImplyLeading: false,
-          leading: showBackArrow
-              ? IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Iconsax.backward))
-              : IconButton(onPressed: () {}, icon: Icon(leadingIcon))),
+        automaticallyImplyLeading: false,
+        leading: showBackArrow
+            ? IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(Iconsax.arrow_left))
+            : leadingIcon != null
+                ? IconButton(onPressed: () {}, icon: Icon(leadingIcon))
+                : null,
+        title: title,
+        actions: actions,
+      ),
     );
   }
 
