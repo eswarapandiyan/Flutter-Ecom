@@ -4,9 +4,9 @@ class CustomeSectionHeading extends StatelessWidget {
   const CustomeSectionHeading({
     super.key,
     this.textColor,
-    required this.showActionBtn,
+    this.showActionBtn = true,
     required this.title,
-    required this.buttonTitle,
+    this.buttonTitle = 'View all',
     this.onPressed,
   });
   final Color? textColor;
@@ -17,6 +17,7 @@ class CustomeSectionHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,

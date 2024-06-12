@@ -24,13 +24,6 @@ class ProductTitleText extends StatelessWidget {
       children: [
         Text(
           productTitle,
-          style: smallSize
-              ? Theme.of(context).textTheme.titleMedium!.apply(
-                    color: dark ? TColors.white : TColors.dark,
-                  )
-              : Theme.of(context).textTheme.labelLarge!.apply(
-                    color: dark ? TColors.white : TColors.dark,
-                  ),
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           textAlign: TextAlign.left,

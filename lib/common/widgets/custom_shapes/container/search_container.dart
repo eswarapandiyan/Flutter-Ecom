@@ -9,8 +9,17 @@ class SearchBarContainer extends StatelessWidget {
   SearchBarContainer({
     super.key,
     this.onTap,
+    required this.text,
+    this.icon = Iconsax.search_normal,
+    this.showBackground = true,
+    this.showBorder = true,
+    this.padding = const EdgeInsets.symmetric(horizontal: TSizes.md),
   });
   final VoidCallback? onTap;
+  final String text;
+  final IconData icon;
+  final bool showBackground, showBorder;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class SearchBarContainer extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: TSizes.md),
+        padding: padding,
         child: Container(
           width: TDeviceUtils.getScreenWidth(context),
           padding: EdgeInsets.all(TSizes.md),
@@ -29,14 +38,14 @@ class SearchBarContainer extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                Iconsax.search_normal,
+                icon,
                 color: dark ? TColors.white : TColors.black,
               ),
               const SizedBox(
                 width: TSizes.spaceBtwItems,
               ),
               Text(
-                'Search in store',
+                text,
                 style: Theme.of(context).textTheme.bodyMedium,
               )
             ],

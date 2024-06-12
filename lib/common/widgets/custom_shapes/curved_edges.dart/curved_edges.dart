@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
 
-class CustomeCurvedEdges extends CustomClipper<Path> {
+class CustomCurvedEdges extends CustomClipper<Path> {
   @override
-  getClip(Size size) {
+  Path getClip(Size size) {
     var path = Path();
 
     path.lineTo(0, size.height);
 
-    final firstCurve = Offset(0, size.height - 20);
-    final lastCurve = Offset(40, size.height - 20);
-    path.quadraticBezierTo(
-        firstCurve.dx, firstCurve.dy, lastCurve.dx, lastCurve.dy);
+    // First curve (left)
+    final firstControlPoint = Offset(size.width * 0.2, size.height - 40);
+    final firstEndPoint = Offset(size.width * 0.4, size.height - 20);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
 
-    final secondFirstCurve = Offset(0, size.height - 20);
-    final secondLastCurve = Offset(size.width - 40, size.width - 30);
-    path.quadraticBezierTo(secondFirstCurve.dx, secondFirstCurve.dy,
-        secondLastCurve.dx, secondLastCurve.dy);
+    // Middle straight line
+    path.lineTo(size.width * 0.6, size.height - 20);
 
-    final thirdFirstCurve = Offset(size.width, size.height - 20);
-    final thirdLastCurve = Offset(size.width, size.height);
-    path.quadraticBezierTo(thirdFirstCurve.dx, thirdFirstCurve.dy,
-        thirdLastCurve.dx, thirdLastCurve.dy);
+    // Second curve (right)
+    final secondControlPoint = Offset(size.width * 0.8, size.height - 40);
+    final secondEndPoint = Offset(size.width, size.height);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondEndPoint.dx, secondEndPoint.dy);
 
     path.lineTo(size.width, 0);
     path.close();
+
     return path;
   }
 
   @override
-  bool shouldReclip(covariant CustomClipper oldClipper) {
-    return true;
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

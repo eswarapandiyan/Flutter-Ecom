@@ -10,7 +10,7 @@ class CustomeVerticalImages extends StatelessWidget {
     required this.title,
     required this.image,
     this.textColor = TColors.white,
-    this.backgroundColor = TColors.white,
+    this.backgroundColor,
     required this.onTap,
   });
   final String title, image;

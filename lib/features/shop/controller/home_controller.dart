@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {

@@ -10,7 +10,7 @@ class CustomRoundedContainer extends StatelessWidget {
     this.padding,
     this.radius = TSizes.cardRadiusLg,
     this.child,
-    this.backgroungColor = TColors.white,
+    this.backgroundColor = TColors.white,
     this.margin,
     this.borderColor = TColors.borderPrimary,
     this.showBorder = false,
@@ -21,7 +21,7 @@ class CustomRoundedContainer extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final Widget? child;
-  final Color backgroungColor;
+  final Color backgroundColor;
   final Color borderColor;
   final bool showBorder;
 
@@ -34,7 +34,7 @@ class CustomRoundedContainer extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(radius),
-          color: backgroungColor,
+          color: backgroundColor,
           border: showBorder ? Border.all(color: borderColor) : null),
       child: child,
     );

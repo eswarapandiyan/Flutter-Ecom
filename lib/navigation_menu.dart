@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:my_store/features/personalization/screens/settings/settings.dart';
 import 'package:my_store/features/shop/screens/home/home.dart';
+import 'package:my_store/features/shop/screens/store/store.dart';
+import 'package:my_store/features/shop/screens/whishlist/whishlist.dart';
 import 'package:my_store/utils/constants/colors.dart';
 import 'package:my_store/utils/helpers/helper_functions.dart';
 
@@ -24,8 +27,7 @@ class BottomNavigationMenu extends StatelessWidget {
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.shop), label: 'Shop'),
-            NavigationDestination(
-                icon: Icon(Iconsax.heart), label: 'Whishlist'),
+            NavigationDestination(icon: Icon(Iconsax.heart), label: 'Wishlist'),
             NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
           ],
         ),
@@ -42,13 +44,13 @@ class NavigationController extends GetxController {
       child: const HomeScreen(),
     ),
     Container(
-      color: Colors.grey,
+      child: const StoreScreen(),
     ),
     Container(
-      color: Colors.pink,
+      child: const WishListScreen(),
     ),
     Container(
-      color: Colors.purple,
+      child: const SettingsScreen(),
     ),
   ];
 }

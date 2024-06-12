@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_store/common/widgets/custom_shapes/container/primary_header_container.dart';
 import 'package:my_store/common/widgets/custom_shapes/container/search_container.dart';
+import 'package:my_store/common/widgets/layout/grid_layout.dart';
 import 'package:my_store/common/widgets/products/product_cards/product_cards_vertical.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
 import 'package:my_store/features/shop/screens/home/widgets/home_app_bar.dart';
@@ -32,6 +33,7 @@ class HomeScreen extends StatelessWidget {
                   /// Search bar
                   SearchBarContainer(
                     onTap: () {},
+                    text: 'Search Products',
                   ),
                   const SizedBox(
                     height: TSizes.spaceBtwSections,
@@ -52,6 +54,9 @@ class HomeScreen extends StatelessWidget {
 
                         ///Categories list
                         CustomeHomeCategories(),
+                        SizedBox(
+                          height: TSizes.spaceBtwSections,
+                        ),
                       ],
                     ),
                   )
@@ -60,23 +65,37 @@ class HomeScreen extends StatelessWidget {
             ),
 
             ///body
-            const Padding(
-              padding: EdgeInsets.all(TSizes.defaultSpace),
+            Padding(
+              padding: const EdgeInsets.all(TSizes.defaultSpace),
 
               /// Prmo slider
               child: Column(
                 children: [
-                  PromoSlider(
+                  const PromoSlider(
                     banners: [
                       TImages.promoBanner1,
                       TImages.promoBanner2,
                       TImages.promoBanner3
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: TSizes.spaceBtwItems,
                   ),
-                  CustomProductVertical(),
+
+                  /// Heading
+                  CustomeSectionHeading(
+                    title: 'Popular products',
+                    onPressed: () {},
+                  ),
+                  const SizedBox(
+                    height: TSizes.spaceBtwItems,
+                  ),
+
+                  /// Popular products
+                  CustomGridLayout(
+                    itemCount: 2,
+                    itemBuilder: (_, index) => const CustomProductVertical(),
+                  ),
                 ],
               ),
 

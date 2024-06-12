@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_store/utils/constants/colors.dart';
-import 'package:my_store/utils/constants/image_strings.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 
 class CustomeBannerImages extends StatelessWidget {
@@ -32,20 +31,23 @@ class CustomeBannerImages extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius!),
-            color: backgroundColor,
-            border: boxBorder),
-        child: ClipRRect(
-            borderRadius: applyImageRadius
-                ? BorderRadius.circular(TSizes.md)
-                : BorderRadius.zero,
-            child: Image(
-                image: isNetworkImage
-                    ? NetworkImage(imageUrl)
-                    : AssetImage(imageUrl) as ImageProvider,
-                fit: boxfit)),
+      child: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius!),
+              color: backgroundColor,
+              border: boxBorder),
+          child: ClipRRect(
+              borderRadius: applyImageRadius
+                  ? BorderRadius.circular(TSizes.md)
+                  : BorderRadius.zero,
+              child: Image(
+                  image: isNetworkImage
+                      ? NetworkImage(imageUrl)
+                      : AssetImage(imageUrl) as ImageProvider,
+                  fit: boxfit)),
+        ),
       ),
     );
   }

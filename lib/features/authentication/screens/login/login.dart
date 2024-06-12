@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 dividerString: TTexts.orSignInWith,
               ),
               const SizedBox(
-                height: TSizes.spaceBtwSections,
+                height: TSizes.spaceBtwSections / 2,
               ),
 
               /// Footer
