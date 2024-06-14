@@ -8,7 +8,12 @@ import 'package:my_store/utils/constants/image_strings.dart';
 class UserProfileTile extends StatelessWidget {
   const UserProfileTile({
     super.key,
+    required this.titleName,
+    required this.email,
+    required this.onPressed,
   });
+  final String titleName, email;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +24,18 @@ class UserProfileTile extends StatelessWidget {
         height: 50,
         borderRadius: 100,
       ),
-      title: Text('Coding with Eswar',
+      title: Text(titleName,
           style: Theme.of(context)
               .textTheme
               .headlineSmall!
               .apply(color: TColors.white)),
-      subtitle: Text('eswar@gmail.com',
+      subtitle: Text(email,
           style: Theme.of(context)
               .textTheme
               .labelMedium!
               .apply(color: TColors.white)),
       trailing: IconButton(
-          onPressed: () {},
+          onPressed: onPressed,
           icon: const Icon(
             Iconsax.edit,
             color: TColors.white,

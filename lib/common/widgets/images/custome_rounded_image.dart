@@ -14,6 +14,7 @@ class CustomRoundedImage extends StatelessWidget {
     this.height = 56,
     this.width = 56,
     this.padding = TSizes.sm,
+    this.onTap,
   });
 
   final BoxFit? fit;
@@ -22,27 +23,31 @@ class CustomRoundedImage extends StatelessWidget {
   final Color? overlayColor;
   final Color? backgroundColor;
   final double? height, width, padding;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      padding: EdgeInsets.all(TSizes.sm),
-      decoration: BoxDecoration(
-        color: backgroundColor ??
-            (THelperFunctions.isDarkMode(context)
-                ? TColors.black
-                : TColors.white),
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Center(
-        child: Image(
-          image: isNetworkImage
-              ? NetworkImage(image)
-              : AssetImage(image) as ImageProvider,
-          color: overlayColor,
-          fit: fit,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height,
+        width: width,
+        padding: EdgeInsets.all(padding!),
+        decoration: BoxDecoration(
+          color: backgroundColor ??
+              (THelperFunctions.isDarkMode(context)
+                  ? TColors.black
+                  : TColors.white),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Center(
+          child: Image(
+            image: isNetworkImage
+                ? NetworkImage(image)
+                : AssetImage(image) as ImageProvider,
+            color: overlayColor,
+            fit: fit,
+          ),
         ),
       ),
     );

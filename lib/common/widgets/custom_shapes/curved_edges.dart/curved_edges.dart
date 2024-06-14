@@ -5,26 +5,34 @@ class CustomCurvedEdges extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
 
-    path.lineTo(0, size.height);
+    // Start from the top left corner
+    path.moveTo(0, 0);
 
-    // First curve (left)
-    final firstControlPoint = Offset(size.width * 0.2, size.height - 40);
-    final firstEndPoint = Offset(size.width * 0.4, size.height - 20);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
+    // Draw a line to the top right corner
+    path.lineTo(size.width, 0);
 
-    // Middle straight line
-    path.lineTo(size.width * 0.6, size.height - 20);
+    // Draw a line to the bottom right corner, leaving space for the curve
+    path.lineTo(size.width, size.height - 20);
 
-    // Second curve (right)
-    final secondControlPoint = Offset(size.width * 0.8, size.height - 40);
-    final secondEndPoint = Offset(size.width, size.height);
+    // Draw the bottom right curve
+    var secondControlPoint = Offset(size.width - 20, size.height);
+    var secondEndPoint = Offset(size.width - 40, size.height);
     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
         secondEndPoint.dx, secondEndPoint.dy);
 
-    path.lineTo(size.width, 0);
-    path.close();
+    // Draw a line to the bottom left curve, leaving space for the curve
+    path.lineTo(40, size.height);
 
+    // Draw the bottom left curve
+    var firstControlPoint = Offset(20, size.height);
+    var firstEndPoint = Offset(0, size.height - 20);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
+
+    // Draw a line back to the start point (top left corner)
+    path.lineTo(0, 0);
+
+    path.close();
     return path;
   }
 

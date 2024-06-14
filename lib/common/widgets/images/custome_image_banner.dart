@@ -15,6 +15,7 @@ class CustomeBannerImages extends StatelessWidget {
     this.borderRadius = TSizes.md,
     this.onPressed,
     this.isNetworkImage = false,
+    this.padding,
   });
 
   final double? height, width;
@@ -26,28 +27,29 @@ class CustomeBannerImages extends StatelessWidget {
   final double? borderRadius;
   final VoidCallback? onPressed;
   final bool isNetworkImage;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.all(0),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius!),
-              color: backgroundColor,
-              border: boxBorder),
-          child: ClipRRect(
-              borderRadius: applyImageRadius
-                  ? BorderRadius.circular(TSizes.md)
-                  : BorderRadius.zero,
-              child: Image(
-                  image: isNetworkImage
-                      ? NetworkImage(imageUrl)
-                      : AssetImage(imageUrl) as ImageProvider,
-                  fit: boxfit)),
-        ),
+      child: Container(
+        height: height,
+        width: width,
+        padding: padding,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius!),
+            color: backgroundColor,
+            border: boxBorder),
+        child: ClipRRect(
+            borderRadius: applyImageRadius
+                ? BorderRadius.circular(TSizes.md)
+                : BorderRadius.zero,
+            child: Image(
+                image: isNetworkImage
+                    ? NetworkImage(imageUrl)
+                    : AssetImage(imageUrl) as ImageProvider,
+                fit: boxfit)),
       ),
     );
   }

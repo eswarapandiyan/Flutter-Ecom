@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:my_store/common/styles/shadows.dart';
 import 'package:my_store/common/widgets/custom_shapes/container/rounded_container.dart';
@@ -8,8 +8,8 @@ import 'package:my_store/common/widgets/images/custome_image_banner.dart';
 import 'package:my_store/common/widgets/texts/brand_title_text_with_verified_icon.dart';
 import 'package:my_store/common/widgets/texts/custom_product_price.dart';
 import 'package:my_store/common/widgets/texts/product_title.dart';
+import 'package:my_store/features/shop/screens/product_details/product_details.dart';
 import 'package:my_store/utils/constants/colors.dart';
-import 'package:my_store/utils/constants/enums.dart';
 import 'package:my_store/utils/constants/image_strings.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 import 'package:my_store/utils/helpers/helper_functions.dart';
@@ -23,7 +23,7 @@ class CustomProductVertical extends StatelessWidget {
 
     ///container with side padding,color,edges,radius and shadow
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.to(const ProductDetails()),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
