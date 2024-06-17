@@ -6,7 +6,6 @@ import 'package:my_store/common/widgets/appBar/appBar.dart';
 import 'package:my_store/common/widgets/images/custome_rounded_image.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
 import 'package:my_store/features/personalization/screens/profile/widgets/profile_menu.dart';
-import 'package:my_store/utils/constants/colors.dart';
 import 'package:my_store/utils/constants/image_strings.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 

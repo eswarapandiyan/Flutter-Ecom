@@ -29,6 +29,7 @@ dependencies:
   get_storage: ^2.1.1
   carousel_slider: ^4.2.1
   readmore: ^3.0.0
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +50,7 @@ flutter:
     - assets/icons/categories/
     - assets/images/banners/
     - assets/images/products/
+    - assets/images/reviews/
 
   fonts:
     - family: poppins

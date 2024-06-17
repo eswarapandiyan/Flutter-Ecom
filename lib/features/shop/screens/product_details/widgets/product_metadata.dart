@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_store/common/widgets/custom_shapes/container/rounded_container.dart';
-import 'package:my_store/common/widgets/images/custome_image_banner.dart';
 import 'package:my_store/common/widgets/images/custome_rounded_image.dart';
 import 'package:my_store/common/widgets/texts/brand_title_text_with_verified_icon.dart';
 import 'package:my_store/common/widgets/texts/custom_product_price.dart';
