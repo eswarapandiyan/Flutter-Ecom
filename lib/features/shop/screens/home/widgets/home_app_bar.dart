@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
 import 'package:my_store/common/widgets/products/cart/cart_counter_icon.dart';
+import 'package:my_store/features/shop/screens/cart/cart.dart';
 import 'package:my_store/utils/constants/colors.dart';
 import 'package:my_store/utils/constants/text_strings.dart';
 
@@ -33,7 +35,7 @@ class HomeAppBar extends StatelessWidget {
       ),
       actions: [
         CartCounterIcon(
-          onPressed: () {},
+          onPressed: () => Get.to(const CartScreen()),
           color: TColors.white,
         )
       ],

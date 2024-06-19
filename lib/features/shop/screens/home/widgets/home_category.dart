@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:my_store/common/widgets/image_text_widget/vertical_image_text.dart';
+import 'package:my_store/features/shop/screens/sub_categories/sub_categories.dart';
 import 'package:my_store/utils/constants/image_strings.dart';
 
 class CustomeHomeCategories extends StatelessWidget {
@@ -19,7 +21,7 @@ class CustomeHomeCategories extends StatelessWidget {
             return CustomeVerticalImages(
               title: 'Shoes Category',
               image: TImages.shoeIcon,
-              onTap: () {},
+              onTap: () => Get.to(const SubCategoriesScreen()),
             );
           }),
     );

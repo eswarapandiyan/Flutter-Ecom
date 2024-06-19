@@ -8,6 +8,7 @@ import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
 import 'package:my_store/features/personalization/screens/address/address.dart';
 import 'package:my_store/features/personalization/screens/profile/profile.dart';
 import 'package:my_store/features/personalization/screens/settings/widgets/user_profile_tile.dart';
+import 'package:my_store/features/shop/screens/orders/orders.dart';
 import 'package:my_store/utils/constants/colors.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 
@@ -75,7 +76,7 @@ class SettingsScreen extends StatelessWidget {
                       title: 'My Order',
                       subtitle: 'in-progress and completed orders',
                       icon: Iconsax.bag_tick,
-                      onTap: () {}),
+                      onTap: () => Get.to(const OrderScreen())),
                   SettingListTile(
                       title: 'Bank Account',
                       subtitle: 'Withdraw balance to register the Bank Account',

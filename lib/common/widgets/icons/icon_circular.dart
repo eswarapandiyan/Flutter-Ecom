@@ -35,7 +35,10 @@ class CustomIconCircular extends StatelessWidget {
                 : TColors.white.withOpacity(0.9),
       ),
       child: IconButton(
-        icon: Icon(icon),
+        icon: Icon(
+          icon,
+          size: size,
+        ),
         onPressed: () {},
         color: color,
       ),
