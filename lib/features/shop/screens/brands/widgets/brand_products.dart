@@ -1,29 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
-import 'package:my_store/common/widgets/layout/grid_layout.dart';
-import 'package:my_store/common/widgets/products/product_cards/product_cards_vertical.dart';
+import 'package:my_store/common/widgets/brands/custom_brand_grid.dart';
 import 'package:my_store/common/widgets/products/sortable/sortable_products.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 
-class AllProductScreen extends StatelessWidget {
-  const AllProductScreen({super.key});
+class BrandProducts extends StatelessWidget {
+  const BrandProducts({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomeAppBar(
         title: Text(
-          'All Products',
+          'Nike',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
-        showBackArrow: true,
+        showBackArrow: false,
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(TSizes.defaultSpace),
-          child: CustomSortableProducts(),
+          child: Column(
+            children: [
+              /// Brand Bar
+              CustomBrandGrid(showBorder: true, onTap: () {}),
+              const SizedBox(
+                height: TSizes.spaceBtwSections,
+              ),
+
+              CustomSortableProducts(),
+            ],
+          ),
         ),
       ),
     );

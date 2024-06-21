@@ -11,7 +11,6 @@ import 'package:my_store/features/shop/screens/cart/widgets/cart_item_list.dart'
 import 'package:my_store/features/shop/screens/checkout/widgets/address_section.dart';
 import 'package:my_store/features/shop/screens/checkout/widgets/bill_section.dart';
 import 'package:my_store/features/shop/screens/checkout/widgets/payment_section.dart';
-import 'package:my_store/features/shop/screens/orders/orders.dart';
 import 'package:my_store/navigation_menu.dart';
 import 'package:my_store/utils/constants/colors.dart';
 import 'package:my_store/utils/constants/image_strings.dart';

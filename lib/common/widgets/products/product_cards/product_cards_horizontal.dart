@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:my_store/common/styles/shadows.dart';
 import 'package:my_store/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:my_store/common/widgets/icons/icon_circular.dart';
 import 'package:my_store/common/widgets/images/custome_image_banner.dart';

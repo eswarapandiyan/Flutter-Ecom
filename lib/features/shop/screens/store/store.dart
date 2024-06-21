@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
 import 'package:my_store/common/widgets/appBar/tabBar.dart';
 import 'package:my_store/common/widgets/brands/custom_brand_grid.dart';
@@ -6,6 +7,7 @@ import 'package:my_store/common/widgets/custom_shapes/container/search_container
 import 'package:my_store/common/widgets/layout/grid_layout.dart';
 import 'package:my_store/common/widgets/products/cart/cart_counter_icon.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
+import 'package:my_store/features/shop/screens/brands/all_brands.dart';
 import 'package:my_store/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:my_store/utils/constants/colors.dart';
 import 'package:my_store/utils/constants/sizes.dart';
@@ -79,7 +81,7 @@ class StoreScreen extends StatelessWidget {
                               itemBuilder: (_, index) {
                                 return CustomBrandGrid(
                                   showBorder: true,
-                                  onTap: () {},
+                                  onTap: () => Get.to(() => const AllBrands()),
                                 );
                               })
                         ],
