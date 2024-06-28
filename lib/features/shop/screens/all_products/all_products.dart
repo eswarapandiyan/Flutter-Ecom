@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
-import 'package:my_store/common/widgets/layout/grid_layout.dart';
-import 'package:my_store/common/widgets/products/product_cards/product_cards_vertical.dart';
 import 'package:my_store/common/widgets/products/sortable/sortable_products.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 

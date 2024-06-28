@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:my_store/common/widgets/icons/icon_circular.dart';
 import 'package:my_store/common/widgets/images/custome_image_banner.dart';
 import 'package:my_store/common/widgets/texts/brand_title_text_with_verified_icon.dart';
 import 'package:my_store/common/widgets/texts/product_title.dart';

@@ -74,5 +74,6 @@ class CustomLoaders {
           Iconsax.warning_2,
           color: TColors.white,
         ));
+    print('Error Snack Bar' + message);
   }
 }
