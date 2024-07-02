@@ -43,23 +43,6 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  // Future<UserCredential> registerWithEmailAndPassword(
-  //     String email, String password) async {
-  //   try {
-  //     // UserCredential userData = await _auth.createUserWithEmailAndPassword(
-  //     //     email: email, password: password);
-  //     // return userData;
-
-  //     return await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-
-  //     /// we are store the value of the user credential in fire store
-  //   } on FirebaseAuthException catch (e) {
-  //     return CustomLoaders.errorSnackBar(
-  //         title: 'FireStore Exception!', message: e.toString());
-  //   }
-  // }
-
   /// Register with email and password     ---  REGISTER
   Future<UserCredential?> registerWithEmailAndPassword(
       String email, String password) async {
@@ -126,6 +109,19 @@ class AuthenticationRepository extends GetxController {
   Future<void> sendEmailVerification() async {
     try {
       await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      CustomLoaders.errorSnackBar(
+          title: 'Send Email Exception!', message: e.toString());
+    } catch (e) {
+      CustomLoaders.errorSnackBar(
+          title: 'Unknown Error!', message: e.toString());
+    }
+  }
+
+  /// Send email reset password
+  Future<void> sendEmailResetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       CustomLoaders.errorSnackBar(
           title: 'Send Email Exception!', message: e.toString());
