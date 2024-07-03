@@ -1,14 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_store/common/widgets/loaders/loaders.dart';
+import 'package:my_store/data/repositories/authentication/authentication_repository.dart';
 import 'package:my_store/data/repositories/user/user_repository.dart';
 import 'package:my_store/features/authentication/models/user_register_model.dart';
+import 'package:my_store/features/authentication/screens/login/login.dart';
+import 'package:my_store/features/personalization/screens/profile/widgets/reauth_user_login_form.dart';
+import 'package:my_store/utils/constants/sizes.dart';
+import 'package:my_store/utils/helpers/network_manager.dart';
+import 'package:my_store/utils/popups/full_screen_loader.dart';
 
 class UserController extends GetxController {
   static UserController get instance => Get.find();
 
   final userRepository = Get.put(UserRepository());
+  final verifyEmail = TextEditingController();
+  final verifyPassword = TextEditingController();
+  final hidePassword = false.obs;
+  GlobalKey<FormState> reAuthUserFormKey = GlobalKey<FormState>();
 
+  Rx<UserModel> user = UserModel.empty().obs;
+  final profileLoading = false.obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    fetchUserRecord();
+  }
+
+  /// fetch user data of logged user
+  Future<void> fetchUserRecord() async {
+    try {
+      profileLoading.value = true;
+      final user = await userRepository.fetchUserData();
+      this.user(user);
+      profileLoading.value = false;
+    } catch (e) {
+      user(UserModel.empty());
+    } finally {
+      profileLoading.value = false;
+    }
+  }
+
+  /// function to save user record
   Future<void> saveUserRecord(UserCredential? userCredential) async {
     try {
       if (userCredential != null) {
@@ -36,6 +72,79 @@ class UserController extends GetxController {
           title: 'Data not saved!',
           message:
               'Something went wrong while saving your infomation,you can re-save your data in your profile');
+    }
+  }
+
+  /// Delete account warning
+  void deleteAccountWarningPopUp() async {
+    Get.defaultDialog(
+        contentPadding: const EdgeInsets.all(TSizes.md),
+        title: 'Delete Account',
+        middleText:
+            'Are you sure want to delete your account permanantly? this action will not reversable,and all your data will be removed permanantly',
+        confirm: ElevatedButton(
+            onPressed: () async => deleteUserAccount(),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                side: const BorderSide(color: Colors.red)),
+            child: OutlinedButton(
+                onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+                child: const Text('Cancel'))));
+  }
+
+  void deleteUserAccount() async {
+    try {
+      TScreenLoader.openLoadingDialog('Processing...',
+          'assets/images/animations/141594-animation-of-docer.json');
+
+      /// First reauthenticate user
+      final auth = AuthenticationRepository.instance;
+      final provider =
+          auth.authUser!.providerData.map((e) => e.providerId).first;
+      if (provider.isNotEmpty) {
+        if (provider == 'google.com') {
+          await auth.signInWithGoogle();
+          await auth.deleteAccount();
+          Get.offAll(const LoginScreen());
+        } else if (provider == 'password') {
+          TScreenLoader.stopLoading();
+          Get.to(const ReAuthUserLoginForm());
+        }
+      }
+    } catch (e) {
+      TScreenLoader.stopLoading();
+      CustomLoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
+    }
+  }
+
+  /// ReAuthenticate before deleting
+  void reAuthEmailAndPasswordUser() async {
+    try {
+      TScreenLoader.openLoadingDialog('Processing...',
+          'assets/images/animations/141594-animation-of-docer.json');
+      final isConnected = await NetworkManager.instance.isConnected();
+
+      /// Check Internet connectivity
+      if (!isConnected) {
+        TScreenLoader.stopLoading();
+        return;
+      }
+
+      if (!reAuthUserFormKey.currentState!.validate()) {
+        TScreenLoader.stopLoading();
+        return;
+      }
+
+      await AuthenticationRepository.instance.reAuthWithEmailandPassword(
+          verifyEmail.text.trim(), verifyPassword.text.trim());
+      await AuthenticationRepository.instance.deleteAccount();
+
+      TScreenLoader.stopLoading();
+      Get.offAll(() => const LoginScreen());
+    } catch (e) {
+      TScreenLoader.stopLoading();
+
+      CustomLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

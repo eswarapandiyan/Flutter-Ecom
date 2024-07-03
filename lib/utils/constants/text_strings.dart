@@ -41,6 +41,13 @@ class TTexts {
   static const String resendEmail = "Resend Email";
   static const String resendEmailIn = "Resend email in";
 
+  /// Eswar
+  static const String updateNameTitle = "Update name";
+  static const String updateChangesSubTitle =
+      "Your Changes Will be update in the profile as well as in the database also";
+
+  static const String updateUserNameTitle = "Update username";
+
   // -- Authentication Headings
   static const String loginTitle = "Welcome back,";
   static const String loginSubTitle =

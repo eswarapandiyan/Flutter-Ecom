@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
 import 'package:my_store/common/widgets/images/custome_rounded_image.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
+import 'package:my_store/features/personalization/controller/user/user_controller.dart';
 import 'package:my_store/features/personalization/screens/profile/widgets/profile_menu.dart';
+import 'package:my_store/features/personalization/screens/profile/widgets/update_FN_LN.dart';
 import 'package:my_store/utils/constants/image_strings.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 
@@ -14,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       appBar: CustomeAppBar(
         title: Text(
@@ -57,14 +61,16 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(
               height: TSizes.spaceBtwItems,
             ),
-            ProfileMenu(
-              title: 'Name',
-              value: 'Coding with Eswar',
-              onPressed: () {},
+            Obx(
+              () => ProfileMenu(
+                title: 'Name',
+                value: controller.user.value.fullName,
+                onPressed: () => Get.to(const UpdateFirstNameLastName()),
+              ),
             ),
             ProfileMenu(
               title: 'Username',
-              value: 'coding_with_eswar',
+              value: controller.user.value.userName,
               onPressed: () {},
             ),
 
@@ -114,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: TSizes.spaceBtwItems / 1.5),
             Expanded(
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => controller.deleteAccountWarningPopUp(),
                   child: const Text(
                     'Close Account',
                     style: TextStyle(color: Colors.red),

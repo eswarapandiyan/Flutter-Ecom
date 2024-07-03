@@ -6,6 +6,7 @@ import 'package:my_store/common/widgets/custom_shapes/container/primary_header_c
 import 'package:my_store/common/widgets/list_tile/list_tile.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
 import 'package:my_store/data/repositories/authentication/authentication_repository.dart';
+import 'package:my_store/features/personalization/controller/user/user_controller.dart';
 import 'package:my_store/features/personalization/screens/address/address.dart';
 import 'package:my_store/features/personalization/screens/profile/profile.dart';
 import 'package:my_store/features/personalization/screens/settings/widgets/user_profile_tile.dart';
@@ -18,6 +19,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -38,8 +40,8 @@ class SettingsScreen extends StatelessWidget {
 
                   /// user profile card
                   UserProfileTile(
-                    titleName: 'Coding with Eswar',
-                    email: 'eswar@gmail.com',
+                    titleName: controller.user.value.fullName,
+                    email: controller.user.value.email,
                     onPressed: () => Get.to(const ProfileScreen()),
                   ),
                   const SizedBox(

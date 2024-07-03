@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_store/utils/formatters/formatter.dart';
 
 class UserModel {
@@ -58,5 +59,23 @@ class UserModel {
       'PhoneNumber': phoneNumber,
       'ProfilePicture': profilePicture
     };
+  }
+
+  /// Factory method to create the UserModel from FireBase document snapshot
+  factory UserModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() != null) {
+      final data = document.data()!;
+      return UserModel(
+          id: document.id,
+          userName: data['Username'] ?? '',
+          email: data['Email'] ?? '',
+          firstName: data['FirstName'] ?? '',
+          lastName: data['LastName'] ?? '',
+          phoneNumber: data['PhoneNumber'] ?? '',
+          profilePicture: data['ProfilePicture'] ?? '');
+    } else {
+      return UserModel.empty();
+    }
   }
 }

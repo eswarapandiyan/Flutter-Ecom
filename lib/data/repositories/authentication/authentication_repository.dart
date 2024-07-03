@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_store/common/widgets/loaders/loaders.dart';
+import 'package:my_store/data/repositories/user/user_repository.dart';
 import 'package:my_store/features/authentication/screens/login/login.dart';
 import 'package:my_store/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:my_store/features/authentication/screens/register/verify_email.dart';
@@ -16,6 +17,8 @@ class AuthenticationRepository extends GetxController {
   /// Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+
+  User? get authUser => _auth.currentUser;
 
   /// called from main.dart on app launch
   @override
@@ -146,6 +149,7 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
+  /// Login with facebook --- Facebook
   Future<UserCredential?> signInWithFacebook() async {
     try {
       // Trigger the sign-in flow
@@ -173,6 +177,37 @@ class AuthenticationRepository extends GetxController {
       CustomLoaders.errorSnackBar(
           title: 'Unknown Error!', message: e.toString());
       return null;
+    }
+  }
+
+  /// Re-authenticate email and password --- REAUTHENTICATE USER
+  Future<void> reAuthWithEmailandPassword(String email, String password) async {
+    try {
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
+
+      // reauthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      CustomLoaders.errorSnackBar(
+          title: 'FireStore Exception! --- RE-AUTH', message: e.toString());
+    } catch (e) {
+      CustomLoaders.errorSnackBar(
+          title: 'Unknown Error!', message: e.toString());
+    }
+  }
+
+  /// delete user Account
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      CustomLoaders.errorSnackBar(
+          title: 'FireStore Exception! --- DELETE-ACC', message: e.toString());
+    } catch (e) {
+      CustomLoaders.errorSnackBar(
+          title: 'Unknown Error!', message: e.toString());
     }
   }
 }
