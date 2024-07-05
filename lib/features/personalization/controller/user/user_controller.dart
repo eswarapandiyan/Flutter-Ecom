@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_store/common/widgets/loaders/loaders.dart';
 import 'package:my_store/data/repositories/authentication/authentication_repository.dart';
 import 'package:my_store/data/repositories/user/user_repository.dart';
@@ -18,6 +19,7 @@ class UserController extends GetxController {
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
   final hidePassword = false.obs;
+  final imageUploading = false.obs;
   GlobalKey<FormState> reAuthUserFormKey = GlobalKey<FormState>();
 
   Rx<UserModel> user = UserModel.empty().obs;
@@ -47,25 +49,29 @@ class UserController extends GetxController {
   /// function to save user record
   Future<void> saveUserRecord(UserCredential? userCredential) async {
     try {
-      if (userCredential != null) {
-        final nameParts =
-            UserModel.nameParts(userCredential.user!.displayName ?? '');
-        final username =
-            UserModel.generateUserName(userCredential.user!.displayName ?? '');
+      await fetchUserRecord();
 
-        /// Map the data
-        final user = UserModel(
-            id: userCredential.user!.uid,
-            userName: username,
-            email: userCredential.user!.email ?? '',
-            firstName: nameParts[0],
-            lastName:
-                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
-            phoneNumber: userCredential.user!.phoneNumber ?? '',
-            profilePicture: userCredential.user!.photoURL ?? '');
+      if (user.value.id.isNotEmpty) {
+        if (userCredential != null) {
+          final nameParts =
+              UserModel.nameParts(userCredential.user!.displayName ?? '');
+          final username = UserModel.generateUserName(
+              userCredential.user!.displayName ?? '');
 
-        /// Save user data
-        await userRepository.saveUserData(user);
+          /// Map the data
+          final user = UserModel(
+              id: userCredential.user!.uid,
+              userName: username,
+              email: userCredential.user!.email ?? '',
+              firstName: nameParts[0],
+              lastName:
+                  nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+              phoneNumber: userCredential.user!.phoneNumber ?? '',
+              profilePicture: userCredential.user!.photoURL ?? '');
+
+          /// Save user data
+          await userRepository.saveUserData(user);
+        }
       }
     } catch (e) {
       CustomLoaders.errorSnackBar(
@@ -85,11 +91,16 @@ class UserController extends GetxController {
         confirm: ElevatedButton(
             onPressed: () async => deleteUserAccount(),
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                side: const BorderSide(color: Colors.red)),
-            child: OutlinedButton(
-                onPressed: () => Navigator.of(Get.overlayContext!).pop(),
-                child: const Text('Cancel'))));
+              backgroundColor: Colors.red,
+              side: const BorderSide(color: Colors.red),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: TSizes.lg),
+              child: Text('delete'),
+            )),
+        cancel: OutlinedButton(
+            onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+            child: const Text('Cancel')));
   }
 
   void deleteUserAccount() async {
@@ -145,6 +156,38 @@ class UserController extends GetxController {
       TScreenLoader.stopLoading();
 
       CustomLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
+  void uploadUserProfilePicture() async {
+    try {
+      final image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 70,
+          maxHeight: 512,
+          maxWidth: 512);
+      if (image != null) {
+        // Upload Image
+        imageUploading.value = true;
+        final imageUrl =
+            await userRepository.uploadImage('Users/Images/Profile', image);
+        // Update User Image record
+        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        await userRepository.updateSingleField(json);
+
+        user.value.profilePicture = imageUrl;
+        user.refresh();
+
+        CustomLoaders.successSnackBar(
+            title: 'Congragulations',
+            message: 'Your profile picture updated successfully');
+      }
+    } catch (e) {
+      print(e.toString());
+      CustomLoaders.errorSnackBar(
+          title: 'Oh Snap - upload exception!', message: e.toString());
+    } finally {
+      imageUploading.value = false;
     }
   }
 }

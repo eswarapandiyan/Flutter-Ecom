@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_store/common/widgets/loaders/loaders.dart';
 import 'package:my_store/data/repositories/authentication/authentication_repository.dart';
 import 'package:my_store/features/authentication/models/user_register_model.dart';
@@ -38,6 +43,7 @@ class UserRepository extends GetxController {
       CustomLoaders.errorSnackBar(
           title: "Fire Store Exception--Fetch data", message: e.toString());
     }
+    return null;
   }
 
   /// Function to update the user data in Fire store
@@ -76,6 +82,23 @@ class UserRepository extends GetxController {
       CustomLoaders.errorSnackBar(
           title: "Fire Store Exception--remove User Record",
           message: e.toString());
+    }
+  }
+
+  /// upload any image
+  Future<String> uploadImage(String path, XFile image) async {
+    try {
+      final ref = FirebaseStorage.instance.ref(path);
+      await ref.putFile(File(image.path));
+      final url = await ref.getDownloadURL();
+      return url;
+    } on FirebaseAuthException catch (e) {
+      throw CustomLoaders.errorSnackBar(
+          title: 'FireStorage Exception! --- UPLOADE IMAGE',
+          message: e.toString());
+    } catch (e) {
+      throw CustomLoaders.errorSnackBar(
+          title: 'Unknown Error!', message: e.toString());
     }
   }
 }

@@ -3,13 +3,16 @@ import 'package:my_store/common/widgets/brands/brand_showcase.dart';
 import 'package:my_store/common/widgets/layout/grid_layout.dart';
 import 'package:my_store/common/widgets/products/product_cards/product_cards_vertical.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
+import 'package:my_store/features/shop/model/category/category_model.dart';
 import 'package:my_store/utils/constants/image_strings.dart';
 import 'package:my_store/utils/constants/sizes.dart';
 
 class CategoryTab extends StatelessWidget {
   const CategoryTab({
     super.key,
+    required this.category,
   });
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class CategoryTab extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           Padding(
-              padding: EdgeInsets.all(TSizes.defaultSpace),
+              padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
                   /// Brands

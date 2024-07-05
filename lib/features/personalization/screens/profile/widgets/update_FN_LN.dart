@@ -80,6 +80,5 @@ class UpdateFirstNameLastName extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

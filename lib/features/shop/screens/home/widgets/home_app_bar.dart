@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
-import 'package:my_store/common/widgets/loaders/shimmer_loader.dart';
+import 'package:my_store/common/widgets/shimmer/shimmer_loader.dart';
 import 'package:my_store/common/widgets/products/cart/cart_counter_icon.dart';
 import 'package:my_store/features/personalization/controller/user/user_controller.dart';
 import 'package:my_store/features/shop/screens/cart/cart.dart';

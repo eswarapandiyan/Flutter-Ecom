@@ -7,6 +7,7 @@ import 'package:my_store/common/widgets/custom_shapes/container/search_container
 import 'package:my_store/common/widgets/layout/grid_layout.dart';
 import 'package:my_store/common/widgets/products/cart/cart_counter_icon.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
+import 'package:my_store/features/shop/controller/category_controller.dart';
 import 'package:my_store/features/shop/screens/brands/all_brands.dart';
 import 'package:my_store/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:my_store/utils/constants/colors.dart';
@@ -18,8 +19,9 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: CustomeAppBar(
           title: Text(
@@ -87,33 +89,18 @@ class StoreScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    bottom: const CustomeTabBar(tabs: [
-                      Tab(
-                        child: Text('Sports'),
-                      ),
-                      Tab(
-                        child: Text('Furnitures'),
-                      ),
-                      Tab(
-                        child: Text('Electronics'),
-                      ),
-                      Tab(
-                        child: Text('Cloths'),
-                      ),
-                      Tab(
-                        child: Text('Cosmatics'),
-                      ),
-                    ])),
+                    bottom: CustomeTabBar(
+                        tabs: categories
+                            .map((category) => Tab(
+                                  child: Text(category.name),
+                                ))
+                            .toList())),
               ];
             },
-            body: const TabBarView(
-              children: [
-                CategoryTab(),
-                CategoryTab(),
-                CategoryTab(),
-                CategoryTab(),
-                CategoryTab(),
-              ],
+            body: TabBarView(
+              children: categories
+                  .map((category) => CategoryTab(category: category))
+                  .toList(),
             )),
       ),
     );

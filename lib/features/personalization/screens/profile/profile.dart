@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:my_store/common/widgets/appBar/appBar.dart';
 import 'package:my_store/common/widgets/images/custome_rounded_image.dart';
+import 'package:my_store/common/widgets/shimmer/shimmer_loader.dart';
 import 'package:my_store/common/widgets/texts/custome_section_heading.dart';
 import 'package:my_store/features/personalization/controller/user/user_controller.dart';
 import 'package:my_store/features/personalization/screens/profile/widgets/profile_menu.dart';
@@ -34,13 +36,25 @@ class ProfileScreen extends StatelessWidget {
               width: double.infinity,
               child: Column(
                 children: [
-                  const CustomRoundedImage(
-                    image: TImages.user,
-                    height: 80,
-                    width: 80,
-                  ),
+                  Obx(() {
+                    final networkImage = controller.user.value.profilePicture;
+                    final image =
+                        networkImage.isNotEmpty ? networkImage : TImages.user;
+                    return controller.imageUploading.value
+                        ? const CustomShimmerLoader(
+                            width: 80,
+                            height: 80,
+                            radius: 80,
+                          )
+                        : CustomRoundedImage(
+                            image: image,
+                            height: 80,
+                            width: 80,
+                            isNetworkImage: networkImage.isNotEmpty,
+                          );
+                  }),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.uploadUserProfilePicture(),
                       child: const Text('Change Profile Picture'))
                 ],
               ),
